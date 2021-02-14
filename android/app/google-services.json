@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "957206895157",
+    "project_id": "aplikasi-kang-lapor",
+    "storage_bucket": "aplikasi-kang-lapor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957206895157:android:0e1a0ca4db87e0fda8af7c",
+        "android_client_info": {
+          "package_name": "com.kanglapor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "957206895157-s05vm4todlie5v11t2tk0035221inrfu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl8x1kDAaFWqNcO5lyXmFIn4O6UC4G9bI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "957206895157-s05vm4todlie5v11t2tk0035221inrfu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
