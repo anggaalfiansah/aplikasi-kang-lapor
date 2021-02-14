@@ -54,10 +54,10 @@ export default function RegistrationScreen({ navigation }) {
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always">
-        {/* <Image
+        <Image
           style={styles.logo}
-        // source={require('../../../assets/icon.png')}
-        /> */}
+          source={{uri : 'https://firebasestorage.googleapis.com/v0/b/aplikasi-kang-lapor.appspot.com/o/images%2Fvector-creator%20(1).png?alt=media&token=c1916e25-b412-489c-9b95-aa39d7410be5'}}
+        />
         <Text style={{textAlign:'center', fontSize:20, marginVertical:20}}>REGISTER KANG LAPOR</Text>
         <TextInput
           style={styles.input}
