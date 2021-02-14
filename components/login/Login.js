@@ -41,10 +41,11 @@ return (
     <KeyboardAwareScrollView
       style={{ flex: 1, width: '100%' }}
       keyboardShouldPersistTaps="always">
-      <Image
+      {/* <Image
         style={styles.logo}
       // source={require('../../../assets/icon.png')}
-      />
+      /> */}
+      <Text style={{textAlign:'center', fontSize:20, marginVertical:20}}>LOGIN KANG LAPOR</Text>
       <TextInput
         style={styles.input}
         placeholder="E-mail"

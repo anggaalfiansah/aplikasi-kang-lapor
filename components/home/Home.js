@@ -124,16 +124,15 @@ export default function HomeScreen(props) {
   };
 
   const [data] = useState([
-    { id: 1, onPress: histori, image: 'https://img.icons8.com/color/70/000000/to-do.png' },
-    { id: 2, onPress: laporan, image: 'https://img.icons8.com/color/70/000000/checklist.png' },
-    { id: 3, onPress: maps, image: 'https://img.icons8.com/dusk/70/000000/globe-earth.png' },
-    { id: 4, onPress: logout, image: 'https://img.icons8.com/color/70/000000/shutdown.png' },
+    { id: 2, onPress: laporan, title:'Buat Laporan', image: 'https://img.icons8.com/color/100/000000/add-file.png' },
+    { id: 1, onPress: histori, title:'Semua Laporan', image: 'https://img.icons8.com/color/70/000000/view-file.png' },
+    { id: 3, onPress: maps, title:'Maps', image: 'https://img.icons8.com/dusk/70/000000/globe-earth.png' },
+    { id: 4, onPress: logout, title:'Logout',image: 'https://img.icons8.com/color/70/000000/shutdown.png' },
   ]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={{ marginVertical: 20 }}>Selamat Datang {nama} dari {alamat}</Text>
-
+      <Text style={{ marginVertical: 20, marginHorizontal: 20, fontSize: 15, textAlign: 'center' }}>Selamat Datang {nama} dari {alamat}</Text>
       <FlatList
         data={data}
         horizontal={false}
