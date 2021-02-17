@@ -30,6 +30,7 @@ export default function HomeScreen(props) {
   const [counter, setCounter] = useState(1);
   const uid = props.extraData.uid;
 
+  // Untuk Request Permission
   const requestPermission = async () => {
     if (Platform.OS === 'android') {
       try {
@@ -55,10 +56,14 @@ export default function HomeScreen(props) {
     if (counter < 3) {
       setCounter(counter + 1);
     } else {
+
+      // Mendapatkan Long, Lat Perangkat
       Geolocation.getCurrentPosition(
         info => {
           const { coords } = info;
 
+          // mendapatkan alamat detail dengan long,lat
+          // Gunakan API masing-masing, API ini akan expired pada hari jum'at
           Geocoder.init('AIzaSyCqPRr7qdOqMxrTspIoc-ybV4Hl70q5ENA');
           Geocoder.from(coords.latitude, coords.longitude)
             .then(json => {
@@ -68,12 +73,16 @@ export default function HomeScreen(props) {
             });
           console.log(coords.latitude);
           console.log(coords.longitude);
+
+          // Menggenerate kode unik
           const uniqId = uuid.v4();
           const id = uniqId.toUpperCase();
+
+          // Mengirim data ke database
           database()
             .ref('/maps/' + id)
             .set({
-              key:id,
+              key: id,
               id: uid,
               pelapor: nama,
               lokasi: lokasi,
@@ -91,6 +100,7 @@ export default function HomeScreen(props) {
   };
 
   useEffect(() => {
+    // Untuk mendapat nama user dar firestore
     requestPermission();
     firestore()
       .collection('users')
@@ -124,10 +134,10 @@ export default function HomeScreen(props) {
   };
 
   const [data] = useState([
-    { id: 2, onPress: laporan, title:'Buat Laporan', image: 'https://img.icons8.com/color/100/000000/add-file.png' },
-    { id: 1, onPress: histori, title:'Semua Laporan', image: 'https://img.icons8.com/color/70/000000/view-file.png' },
-    { id: 3, onPress: maps, title:'Maps', image: 'https://img.icons8.com/dusk/70/000000/globe-earth.png' },
-    { id: 4, onPress: logout, title:'Logout',image: 'https://img.icons8.com/color/70/000000/shutdown.png' },
+    { id: 2, onPress: laporan, title: 'Buat Laporan', image: 'https://img.icons8.com/color/100/000000/add-file.png' },
+    { id: 1, onPress: histori, title: 'Semua Laporan', image: 'https://img.icons8.com/color/70/000000/view-file.png' },
+    { id: 3, onPress: maps, title: 'Maps', image: 'https://img.icons8.com/dusk/70/000000/globe-earth.png' },
+    { id: 4, onPress: logout, title: 'Logout', image: 'https://img.icons8.com/color/70/000000/shutdown.png' },
   ]);
 
   return (

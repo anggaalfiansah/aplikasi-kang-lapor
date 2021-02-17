@@ -28,6 +28,7 @@ export default function RegistrationScreen({ navigation }) {
     console.log(fileName);
 
     useEffect(() => {
+        // digunakan untuk mendapatkan Long, Lat perangkat kita
         Geolocation.getCurrentPosition(
             (position) => {
                 // console.log(position)
@@ -43,6 +44,8 @@ export default function RegistrationScreen({ navigation }) {
         console.log(Longitude, Latitude);
     });
 
+    // mendapatkan alamat detail dengan long,lat
+    // Gunakan API masing-masing, API ini akan expired pada hari jum'at
     const getAlamat = () => {
         Geocoder.init('AIzaSyCqPRr7qdOqMxrTspIoc-ybV4Hl70q5ENA');
         Geocoder.from(Latitude, Longitude)
@@ -55,14 +58,15 @@ export default function RegistrationScreen({ navigation }) {
             .catch(error => console.warn(error));
     };
 
+    // Mengirim Data Ke FireBase
     const laporkeun = () => {
         const currentDate = new Date();
         const tanggal = `${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()} ${('0' + currentDate.getHours()).slice(-2)}:${('0' + currentDate.getMinutes()).slice(-2)}:${('0' + currentDate.getSeconds()).slice(-2)}`;
         console.log(tanggal);
         if (ImageUri) {
 
+            // Upload File Ke firebase storage
             const storageRef = storage().ref(`images/${fileName}`);
-
             storageRef.putFile(`${ImageUri}`)
                 .on(
                     storage.TaskEvent.STATE_CHANGED,
@@ -78,6 +82,7 @@ export default function RegistrationScreen({ navigation }) {
                         console.log('image upload error: ' + error.toString());
                     },
                     () => {
+                        // Untuk mendapatkan url dari file yang kita upload
                         storageRef.getDownloadURL()
                             .then((downloadUrl) => {
                                 console.log('File available at: ' + downloadUrl);
@@ -91,6 +96,7 @@ export default function RegistrationScreen({ navigation }) {
                                     image: downloadUrl,
                                     waktu: tanggal,
                                 };
+                                // Menyimpan semua data di firestore
                                 firestore().collection('laporan')
                                     .doc(id)
                                     .set(data)
@@ -110,6 +116,7 @@ export default function RegistrationScreen({ navigation }) {
         }
     };
 
+    // Untuk Ambil Gambar melalui Kamera
     const captureImage = (type) => {
         let options = {
             mediaType: type,
@@ -148,6 +155,7 @@ export default function RegistrationScreen({ navigation }) {
         });
     };
 
+    // Untuk Ambil Gambar Dari File di HP
     const chooseFile = (type) => {
         let options = {
             mediaType: type,

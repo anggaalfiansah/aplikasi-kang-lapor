@@ -19,6 +19,7 @@ const Histori = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    // Untuk mendapatkan data laporan dari firestore secara realtime
     const subscriber = firestore()
       .collection('laporan')
       .onSnapshot((querySnapshot) => {

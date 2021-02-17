@@ -99,6 +99,7 @@ export default function Maps() {
     });
   }, []);
 
+  // Untuk mendapat lokasi perangkat
   const getMyLocation = () => {
     setKoordinat([Longitude, Latitude]);
     console.log([Longitude, Latitude]);
