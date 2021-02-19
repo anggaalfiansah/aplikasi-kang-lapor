@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     width: '100%',
-    backgroundColor: 'tomato',
+    backgroundColor: 'pink',
     paddingBottom: 20,
   },
   map: {
@@ -145,7 +145,7 @@ export default function Maps() {
             zoomLevel={15}
             centerCoordinate={koordinat}
             animationMode={'flyTo'}
-            animationDuration={500}
+            animationDuration={1000}
           />
           {renderAnnotations()}
         </MapboxGL.MapView>
