@@ -56,9 +56,9 @@ const Histori = () => {
                 <Text style={{textAlign: 'center', marginBottom: 20, fontSize:12}}>{item.waktu}</Text>
                 <Text style={{fontWeight: 'bold'}}>Laporan {item.jenis}</Text>
                 <Text style={{ marginBottom:5}}>{item.id}</Text>
-                <Text style={{fontWeight: 'bold'}}>Keterangan      : </Text>
+                <Text style={{fontWeight: 'bold'}}>Keterangan                         : </Text>
                 <Text>{item.keterangan}</Text>
-                <Text style={{fontWeight: 'bold'}}>Alamat              :</Text>
+                <Text style={{fontWeight: 'bold'}}>Alamat/Koordinat              :</Text>
                 <Text>{item.alamat}</Text>
                 <Image style={{height:300, width: '100%', marginVertical:10}} source={{uri:item.image}}/>
             </View>

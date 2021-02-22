@@ -20,7 +20,7 @@ import { useEffect } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import database from '@react-native-firebase/database';
 import Geolocation from 'react-native-geolocation-service';
-import Geocoder from 'react-native-geocoding';
+// import Geocoder from 'react-native-geocoding';
 import uuid from 'react-native-uuid';
 
 export default function HomeScreen(props) {
@@ -64,13 +64,15 @@ export default function HomeScreen(props) {
 
           // mendapatkan alamat detail dengan long,lat
           // Gunakan API masing-masing, API ini akan expired pada hari jum'at
-          Geocoder.init('AIzaSyCqPRr7qdOqMxrTspIoc-ybV4Hl70q5ENA');
-          Geocoder.from(coords.latitude, coords.longitude)
-            .then(json => {
-              const addressComponent = json.results[0].formatted_address;
-              console.log(addressComponent);
-              setLokasi(addressComponent);
-            });
+          // Geocoder.init('AIzaSyCqPRr7qdOqMxrTspIoc-ybV4Hl70q5ENA');
+          // Geocoder.from(coords.latitude, coords.longitude)
+          //   .then(json => {
+          //     const addressComponent = json.results[0].formatted_address;
+          //     console.log(addressComponent);
+          //     setLokasi(addressComponent)
+          //   });
+
+          setLokasi(`${coords.latitude}, ${coords.longitude}`);
           console.log(coords.latitude);
           console.log(coords.longitude);
 
@@ -91,7 +93,8 @@ export default function HomeScreen(props) {
 
             })
             .then(() => {
-              alert(`Sinyal darurat berhasil terkirim dengan lokasi ${lokasi} dan koordinat ${coords.longitude}, ${coords.latitude}`);
+              alert(`Sinyal darurat berhasil terkirim dengan koordinat ${coords.longitude}, ${coords.latitude}`);
+              // alert(`Sinyal darurat berhasil terkirim dengan lokasi ${lokasi} dan koordinat ${coords.longitude}, ${coords.latitude}`);
               setCounter(1);
             });
         }
