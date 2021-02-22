@@ -10,8 +10,6 @@ import {
   ScrollView,
   FlatList,
   SafeAreaView,
-  PermissionsAndroid,
-  Platform,
 } from 'react-native';
 import styles from './styles';
 import auth from '@react-native-firebase/auth';
@@ -31,27 +29,6 @@ export default function HomeScreen(props) {
   const [Longitude, setLongitude] = useState(0);
   const [Latitude, setLatitude] = useState(0);
   const uid = props.extraData.uid;
-
-  // Untuk Request Permission
-  const requestPermission = async () => {
-    if (Platform.OS === 'android') {
-      try {
-        const granted = await PermissionsAndroid.requestMultiple([
-          PermissionsAndroid.PERMISSIONS.CAMERA,
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
-          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-        ]);
-        // If Permission is granted
-        return granted === PermissionsAndroid.RESULTS.GRANTED;
-      } catch (err) {
-        console.warn(err);
-        alert('Write permission err', err);
-      }
-      return false;
-    } else { return true; }
-  };
 
   const emergencyButton = () => {
     console.log(counter);
@@ -87,7 +64,6 @@ export default function HomeScreen(props) {
 
   useEffect(() => {
     // Untuk mendapat nama user dar firestore
-    requestPermission();
     firestore()
       .collection('users')
       .doc(uid)

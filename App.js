@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 // import { Buffer } from 'buffer';
 import 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
@@ -14,6 +15,7 @@ import {
 import auth from '@react-native-firebase/auth';
 // import firestore from '@react-native-firebase/firestore';
 import {decode, encode} from 'base-64';
+import {PermissionsAndroid, Platform} from 'react-native';
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -33,7 +35,31 @@ export default function App() {
     }
   };
 
+  // Untuk Request Permission
+  const requestPermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.requestMultiple([
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        ]);
+        // If Permission is granted
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+      } catch (err) {
+        console.warn(err);
+        alert('Write permission err', err);
+      }
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   useEffect(() => {
+    requestPermission();
     const subscriber = auth().onAuthStateChanged(authStateChanged);
     return subscriber; // unsubscribe on unmount
   });
