@@ -28,6 +28,8 @@ export default function HomeScreen(props) {
   const [alamat, setAlamat] = useState('');
   const [lokasi, setLokasi] = useState('');
   const [counter, setCounter] = useState(1);
+  const [Longitude, setLongitude] = useState(0);
+  const [Latitude, setLatitude] = useState(0);
   const uid = props.extraData.uid;
 
   // Untuk Request Permission
@@ -58,47 +60,28 @@ export default function HomeScreen(props) {
     } else {
 
       // Mendapatkan Long, Lat Perangkat
-      Geolocation.getCurrentPosition(
-        info => {
-          const { coords } = info;
 
-          // mendapatkan alamat detail dengan long,lat
-          // Gunakan API masing-masing, API ini akan expired pada hari jum'at
-          // Geocoder.init('AIzaSyCqPRr7qdOqMxrTspIoc-ybV4Hl70q5ENA');
-          // Geocoder.from(coords.latitude, coords.longitude)
-          //   .then(json => {
-          //     const addressComponent = json.results[0].formatted_address;
-          //     console.log(addressComponent);
-          //     setLokasi(addressComponent)
-          //   });
+      // Menggenerate kode unik
+      const uniqId = uuid.v4();
+      const id = uniqId.toUpperCase();
 
-          setLokasi(`${coords.latitude}, ${coords.longitude}`);
-          console.log(coords.latitude);
-          console.log(coords.longitude);
+      // Mengirim data ke database
+      database()
+        .ref('/maps/' + id)
+        .set({
+          key: id,
+          id: uid,
+          pelapor: nama,
+          lokasi: lokasi,
+          latitude: Latitude,
+          longitude: Longitude,
 
-          // Menggenerate kode unik
-          const uniqId = uuid.v4();
-          const id = uniqId.toUpperCase();
-
-          // Mengirim data ke database
-          database()
-            .ref('/maps/' + id)
-            .set({
-              key: id,
-              id: uid,
-              pelapor: nama,
-              lokasi: lokasi,
-              latitude: coords.latitude,
-              longitude: coords.longitude,
-
-            })
-            .then(() => {
-              alert(`Sinyal darurat berhasil terkirim dengan koordinat ${coords.longitude}, ${coords.latitude}`);
-              // alert(`Sinyal darurat berhasil terkirim dengan lokasi ${lokasi} dan koordinat ${coords.longitude}, ${coords.latitude}`);
-              setCounter(1);
-            });
-        }
-      );
+        })
+        .then(() => {
+          alert(`Sinyal darurat berhasil terkirim dengan koordinat ${Longitude}, ${Latitude}`);
+          // alert(`Sinyal darurat berhasil terkirim dengan lokasi ${lokasi} dan koordinat ${coords.longitude}, ${coords.latitude}`);
+          setCounter(1);
+        });
     }
   };
 
@@ -113,6 +96,22 @@ export default function HomeScreen(props) {
         setNama(querySnapshot._data.nama);
         setAlamat(querySnapshot._data.alamat);
       });
+
+    Geolocation.getCurrentPosition(
+      (position) => {
+        // console.log(position)
+        setLongitude(position.coords.longitude);
+        setLatitude(position.coords.latitude);
+
+        setLokasi(`${position.coords.longitude}, ${position.coords.latitude}`);
+      },
+      (error) => {
+        // See error code charts below.
+        console.log(error.code, error.message);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000, forceRequestLocation: true }
+    );
+    console.log(Longitude, Latitude);
   });
 
   const logout = () => {
