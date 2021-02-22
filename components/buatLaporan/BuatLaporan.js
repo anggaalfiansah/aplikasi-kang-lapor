@@ -7,7 +7,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Picker } from '@react-native-picker/picker';
 import styles from './styles';
 import Geolocation from 'react-native-geolocation-service';
-import Geocoder from 'react-native-geocoding';
+// import Geocoder from 'react-native-geocoding';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -47,15 +47,16 @@ export default function RegistrationScreen({ navigation }) {
     // mendapatkan alamat detail dengan long,lat
     // Gunakan API masing-masing, API ini akan expired pada hari jum'at
     const getAlamat = () => {
-        Geocoder.init('AIzaSyCqPRr7qdOqMxrTspIoc-ybV4Hl70q5ENA');
-        Geocoder.from(Latitude, Longitude)
-            .then(json => {
-                var addressComponent = json.results[0].formatted_address;
-                console.log(addressComponent);
-                setAlamat(addressComponent);
-                // setAlamat(`${Latitude},${Longitude}`);
-            })
-            .catch(error => console.warn(error));
+        setAlamat(`${Longitude}, ${Latitude}`);
+        // Geocoder.init('AIzaSyCqPRr7qdOqMxrTspIoc-ybV4Hl70q5ENA');
+        // Geocoder.from(Latitude, Longitude)
+        //     .then(json => {
+        //         var addressComponent = json.results[0].formatted_address;
+        //         console.log(addressComponent);
+        //         setAlamat(addressComponent);
+        //         // setAlamat(`${Latitude},${Longitude}`);
+        //     })
+        //     .catch(error => console.warn(error));
     };
 
     // Mengirim Data Ke FireBase
@@ -228,7 +229,7 @@ export default function RegistrationScreen({ navigation }) {
                     autoCapitalize="none"
                 />
                 <Text style={{ marginVertical: 5, marginHorizontal: 30, fontSize: 15 }}>
-                    Alamat
+                    Koordinat
                     </Text>
                 <View style={styles.container}>
                     <TextInput
